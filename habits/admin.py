@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Place, WeekDay, Habit
+from .models import Place,Habit
 
 
 # Register your models here.
@@ -8,14 +8,6 @@ from .models import Place, WeekDay, Habit
 class PlaceAdmin(admin.ModelAdmin):
     """
     Класс для отображения модели Place в интерфейсе админки
-    """
-    list_display = ("id", "name")
-
-
-@admin.register(WeekDay)
-class WeekDayAdmin(admin.ModelAdmin):
-    """
-    Класс для отображения модели WeekDay в интерфейсе админки
     """
     list_display = ("id", "name")
 

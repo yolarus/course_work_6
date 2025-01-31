@@ -1,5 +1,8 @@
+from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.db import models
 from users.models import User
+from src.utils import week_days
 
 
 # Create your models here.
@@ -19,20 +22,6 @@ class Place(models.Model):
         return self.name
 
 
-class WeekDay(models.Model):
-    """
-    Модель для недели
-    """
-    name = models.CharField(max_length=15, verbose_name="Название")
-
-    class Meta:
-        verbose_name = "День недели"
-        verbose_name_plural = "Дни недели"
-
-    def __str__(self):
-        return self.name
-
-
 class Habit(models.Model):
     """
     Модель привычки
@@ -40,7 +29,9 @@ class Habit(models.Model):
     owner = models.ForeignKey(User,
                               on_delete=models.CASCADE,
                               verbose_name="Создатель привычки",
-                              related_name="habits")
+                              related_name="habits",
+                              null=True,
+                              blank=True)
     place = models.ForeignKey(Place,
                               on_delete=models.PROTECT,
                               verbose_name="Место выполнения привычки",
@@ -54,11 +45,17 @@ class Habit(models.Model):
                                       null=True,
                                       blank=True,
                                       related_name="habits")
-    frequency = models.ManyToManyField(WeekDay,
-                                       verbose_name="Периодичность",
-                                       default=[1, 2, 3, 4, 5, 6, 7])
+
+    frequency = ArrayField(base_field=models.CharField(max_length=2),
+                           verbose_name="Периодичность",
+                           default=week_days,
+                           validators=[MinLengthValidator(1, "Привычка должна выполняться минимум 1 раз в неделю")])
     reward = models.CharField(max_length=150, verbose_name="Вознаграждение", null=True, blank=True)
-    lead_time = models.PositiveSmallIntegerField(default=60, verbose_name="Время на выполнение")
+    lead_time = models.PositiveSmallIntegerField(default=60,
+                                                 verbose_name="Время на выполнение",
+                                                 validators=[MaxValueValidator(120,
+                                                                               "Время выполнения привычки не может "
+                                                                               "быть больше 120 секунд")])
     is_public = models.BooleanField(default=False, verbose_name="Публичная привычка")
 
     class Meta:
