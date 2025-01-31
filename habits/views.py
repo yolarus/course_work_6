@@ -12,7 +12,7 @@ from .serializers import PlaceSerializer, HabitSerializer
 # Create your views here.
 class HabitListCreateAPIView(generics.ListCreateAPIView):
     """
-    Дженерик для отображения списка и создания нового объекта Habit:
+    Дженерик для отображения списка и создания нового объекта Habit
     """
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
@@ -33,9 +33,18 @@ class HabitListCreateAPIView(generics.ListCreateAPIView):
         habit.save()
 
 
+class HabitListPublicAPIView(generics.ListAPIView):
+    """
+    Дженерик для отображения списка публичных объектов Habit:
+    """
+    queryset = Habit.objects.filter(is_public=True)
+    serializer_class = HabitSerializer
+    pagination_class = HabitPaginator
+
+
 class HabitRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
-    Дженерик для просмотра, редактирования и удаления объекта Habit:
+    Дженерик для просмотра, редактирования и удаления объекта Habit
     """
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
