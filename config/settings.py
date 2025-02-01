@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -178,3 +178,11 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BROKER_URL = getenv("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = getenv("CELERY_RESULT_BACKEND")
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+CELERY_BEAT_SCHEDULE = {
+    'habits_scheduler': {
+        'task': 'habits.tasks.habits_scheduler',
+        'schedule': timedelta(seconds=10)}}
+
+TELEGRAM_URl = "https://api.telegram.org/bot"
+TELEGRAM_BOT_TOKEN = getenv("TELEGRAM_BOT_TOKEN")

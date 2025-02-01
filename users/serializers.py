@@ -30,4 +30,4 @@ class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "email", "password", "username", "first_name", "last_name", "phone_number",
-                  "country", "avatar"]
+                  "country", "avatar", "tg_chat_id"]

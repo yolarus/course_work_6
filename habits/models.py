@@ -63,4 +63,4 @@ class Habit(models.Model):
         verbose_name_plural = "Привычки"
 
     def __str__(self):
-        return f"В {self.frequency} я буду {self.action} в {self.time} в {self.place.name}"
+        return f"В {', '.join(self.frequency)} я буду {self.action} в {self.time} в {self.place.name}"

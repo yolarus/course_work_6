@@ -26,10 +26,11 @@ class HabitListCreateAPIView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         """
-        Сохранение владельца при создании объекта
+        Сохранение владельца при создании объекта и форматирование дней недели
         """
         habit = serializer.save()
         habit.owner = self.request.user
+        habit.frequency = [day.lower().capitalize() for day in habit.frequency]
         habit.save()
 
 
@@ -49,6 +50,14 @@ class HabitRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
     permission_classes = [IsOwner | IsAdminUser]
+
+    def perform_update(self, serializer):
+        """
+        Форматирование дней недели
+        """
+        habit = serializer.save()
+        habit.frequency = [day.lower().capitalize() for day in habit.frequency]
+        habit.save()
 
 
 class PlaceListCreateAPIView(generics.ListCreateAPIView):

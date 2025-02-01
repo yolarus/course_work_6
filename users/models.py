@@ -25,6 +25,10 @@ class User(AbstractUser):
                                verbose_name="Страна",
                                null=True,
                                blank=True)
+    tg_chat_id = models.CharField(max_length=50,
+                                  verbose_name="ТГ chat-id",
+                                  blank=True,
+                                  null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
