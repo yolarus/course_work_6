@@ -1,8 +1,9 @@
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.db import models
-from users.models import User
+
 from src.utils import week_days
+from users.models import User
 
 
 # Create your models here.

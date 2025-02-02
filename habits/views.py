@@ -6,7 +6,7 @@ from users.permissions import IsOwner
 
 from .models import Habit, Place
 from .paginators import HabitPaginator
-from .serializers import PlaceSerializer, HabitSerializer
+from .serializers import HabitSerializer, PlaceSerializer
 from .validators import NotRewardOrRelatedHabitValidator, RelatedHabitOrRewardValidator
 
 
@@ -96,4 +96,4 @@ class PlaceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
-    permission_classes =[IsOwner | IsAdminUser]
+    permission_classes = [IsOwner | IsAdminUser]

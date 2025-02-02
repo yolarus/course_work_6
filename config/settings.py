@@ -182,7 +182,7 @@ CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_BEAT_SCHEDULE = {
     'habits_scheduler': {
         'task': 'habits.tasks.habits_scheduler',
-        'schedule': timedelta(seconds=10)}}
+        'schedule': timedelta(minutes=1)}}
 
 TELEGRAM_URl = "https://api.telegram.org/bot"
 TELEGRAM_BOT_TOKEN = getenv("TELEGRAM_BOT_TOKEN")

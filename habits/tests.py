@@ -1,4 +1,3 @@
-from django.contrib.auth.models import Group
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
@@ -6,7 +5,7 @@ from rest_framework.test import APITestCase
 
 from users.models import User
 
-from .models import Place, Habit
+from .models import Habit, Place
 
 
 # Create your tests here.

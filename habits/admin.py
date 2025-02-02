@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Place, Habit
+from .models import Habit, Place
 
 
 # Register your models here.

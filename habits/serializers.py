@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from .models import Place, Habit
-from .validators import RelatedHabitOrRewardValidator, IsPleasantHabitValidator, NotRewardOrRelatedHabitValidator
+from .models import Habit, Place
+from .validators import IsPleasantHabitValidator, NotRewardOrRelatedHabitValidator, RelatedHabitOrRewardValidator
 
 
 class PlaceSerializer(serializers.ModelSerializer):

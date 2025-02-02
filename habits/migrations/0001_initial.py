@@ -3,9 +3,10 @@
 import django.contrib.postgres.fields
 import django.core.validators
 import django.db.models.deletion
-import src.utils
 from django.conf import settings
 from django.db import migrations, models
+
+import src.utils
 
 
 class Migration(migrations.Migration):

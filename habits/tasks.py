@@ -1,11 +1,10 @@
 import datetime
 
-from django.utils import timezone
-from datetime import timedelta
 from celery import shared_task
+
 from src.utils import send_telegram_message, week_days
+
 from .models import Habit
-from users.models import User
 
 
 @shared_task()

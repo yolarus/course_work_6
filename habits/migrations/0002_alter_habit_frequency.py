@@ -2,8 +2,9 @@
 
 import django.contrib.postgres.fields
 import django.core.validators
-import src.utils
 from django.db import migrations, models
+
+import src.utils
 
 
 class Migration(migrations.Migration):
