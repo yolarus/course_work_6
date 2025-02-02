@@ -13,6 +13,12 @@ class Place(models.Model):
 
     name = models.CharField(max_length=100, verbose_name="Название")
     description = models.TextField(verbose_name="Описание", null=True, blank=True)
+    owner = models.ForeignKey(User,
+                              on_delete=models.CASCADE,
+                              verbose_name="Создатель места",
+                              related_name="places",
+                              null=True,
+                              blank=True)
 
     class Meta:
         verbose_name = "Место"

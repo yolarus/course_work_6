@@ -44,7 +44,8 @@ class UserTestCase(APITestCase):
                        'last_name',
                        'phone_number',
                        'country',
-                       'avatar']
+                       'avatar',
+                       'tg_chat_id']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data_keys, result_keys)
@@ -78,7 +79,8 @@ class UserTestCase(APITestCase):
                        'last_name',
                        'phone_number',
                        'country',
-                       'avatar']
+                       'avatar',
+                       'tg_chat_id']
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data_keys, result_keys)

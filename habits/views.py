@@ -7,6 +7,7 @@ from users.permissions import IsOwner
 from .models import Habit, Place
 from .paginators import HabitPaginator
 from .serializers import PlaceSerializer, HabitSerializer
+from .validators import NotRewardOrRelatedHabitValidator, RelatedHabitOrRewardValidator
 
 
 # Create your views here.
@@ -38,7 +39,7 @@ class HabitListPublicAPIView(generics.ListAPIView):
     """
     Дженерик для отображения списка публичных объектов Habit:
     """
-    queryset = Habit.objects.filter(is_public=True)
+    queryset = Habit.objects.filter(is_public=True).order_by("pk")
     serializer_class = HabitSerializer
     pagination_class = HabitPaginator
 
@@ -53,11 +54,18 @@ class HabitRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         """
-        Форматирование дней недели
+        Форматирование дней недели и валидация при обновлении объекта
         """
-        habit = serializer.save()
-        habit.frequency = [day.lower().capitalize() for day in habit.frequency]
-        habit.save()
+        habit = self.get_object()
+        updated_habit = serializer.save()
+        updated_habit.frequency = [day.capitalize() for day in updated_habit.frequency]
+
+        validator_1 = NotRewardOrRelatedHabitValidator(is_update=True)
+        validator_1(instance=habit, updated_instance=updated_habit)
+        validator_2 = RelatedHabitOrRewardValidator(is_update=True)
+        validator_2(instance=habit, updated_instance=updated_habit)
+
+        updated_habit.save()
 
 
 class PlaceListCreateAPIView(generics.ListCreateAPIView):
@@ -74,6 +82,12 @@ class PlaceListCreateAPIView(generics.ListCreateAPIView):
         place = serializer.save()
         place.owner = self.request.user
         place.save()
+
+    def get_queryset(self):
+        """
+        Подбор списка объектов в зависимости от статуса пользователя
+        """
+        return get_queryset_for_owner(self.request.user, self.queryset)
 
 
 class PlaceRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):

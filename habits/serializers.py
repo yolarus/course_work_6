@@ -11,7 +11,7 @@ class PlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = "__all__"
+        fields = ["id", "name", "description", "owner"]
 
 
 class HabitSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class HabitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Habit
-        exclude = ["owner"]
+        fields = "__all__"
         validators = [RelatedHabitOrRewardValidator("reward", "related_habit"),
                       IsPleasantHabitValidator("related_habit"),
                       NotRewardOrRelatedHabitValidator("is_pleasant_habit", "related_habit", "reward")]
