@@ -21,7 +21,8 @@ dependencies = [
     "django-celery-beat (>=2.7.0,<3.0.0)",
     "coverage (>=7.6.12,<8.0.0)",
     "django-cors-headers (>=4.7.0,<5.0.0)",
-    "requests (>=2.32.3,<3.0.0)"
+    "requests (>=2.32.3,<3.0.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)"
 ]
 
 
@@ -34,12 +35,6 @@ flake8 = "^7.1.2"
 mypy = "^1.15.0"
 isort = "^6.0.1"
 black = "^25.1.0"
-
-[tool.poetry.group.lint.dependencies]
-flake8 = "^7.1.1"
-black = "^24.10.0"
-mypy = "^1.14.1"
-isort = "^6.0.0"
 
 [tool.black]
 line-length = 119
