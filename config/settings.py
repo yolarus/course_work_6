@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 from datetime import timedelta
-from os import getenv
+from os import getenv, path
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv(".env", override=True)
@@ -29,8 +30,10 @@ SECRET_KEY = getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if getenv("DEBUG") == "True" else False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['0.0.0.0',
+                 'localhost',
+                 '130.193.59.121',
+                 'django']
 
 # Application definition
 
@@ -89,14 +92,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': getenv("NAME"),
-        'USER': getenv("USER"),
-        'PASSWORD': getenv("PASSWORD"),
-        'HOST': getenv("HOST"),
-        'PORT': getenv("PORT")
+        'NAME': getenv("DB_NAME"),
+        'USER': getenv("DB_USER"),
+        'PASSWORD': getenv("DB_PASSWORD"),
+        'HOST': getenv("DB_HOST"),
+        'PORT': getenv("DB_PORT")
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -134,6 +136,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static/"]
+STATIC_ROOT = path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -153,12 +156,17 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
-    'redis://localhost:6379/0'
+    'http://localhost',
+    'redis://localhost:6379/0',
+    'redis://redis_habits:6379/0',
+    'http://130.193.59.121',
+    'http://django'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8000']
+    'http://localhost',
+    'http://130.193.59.121',
+    'http://django']
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
